@@ -7,48 +7,68 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background: url('https://wallpapercave.com/wp/wp2565076.png') no-repeat center center/cover;
             text-align: center;
             font-family: 'Press Start 2P', cursive;
             color: #00ff00;
-            margin: 0;
-            padding: 0;
+            padding: 20px;
         }
 
         .container {
             background: rgba(0, 0, 0, 0.8);
-            padding: 30px;
-            width: 60%;
-            margin: 10% auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+            margin: 10vh auto;
             border: 4px solid #00ff00;
             box-shadow: 0px 0px 15px #00ff00;
             border-radius: 10px;
         }
 
         h1 {
-            font-size: 32px;
+            font-size: 24px;
         }
 
         h2 {
-            font-size: 24px;
+            font-size: 18px;
             color: #ffcc00;
         }
 
         p {
-            font-size: 14px;
-            margin: 20px 0;
+            font-size: 12px;
+            margin: 15px 0;
+        }
+
+        .countdown {
+            font-size: 20px;
+            color: #ff4444;
+            margin: 15px 0;
+            animation: fadeIn 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0.5; }
+            to { opacity: 1; }
         }
 
         .notify-btn {
             background: #00ff00;
             color: black;
-            padding: 10px 20px;
+            padding: 10px;
             border: 2px solid black;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
             text-transform: uppercase;
-            margin: 20px 0;
+            margin: 15px 0;
+            width: 100%;
+            max-width: 200px;
         }
 
         .notify-btn:hover {
@@ -59,14 +79,24 @@
             display: inline-block;
             color: #ffcc00;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 12px;
             margin: 10px;
         }
 
         footer {
-            margin-top: 20px;
-            font-size: 12px;
+            margin-top: 15px;
+            font-size: 10px;
             color: #ccc;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 600px) {
+            h1 { font-size: 20px; }
+            h2 { font-size: 16px; }
+            p { font-size: 11px; }
+            .container { width: 95%; padding: 15px; }
+            .countdown { font-size: 16px; }
+            .notify-btn { font-size: 12px; }
         }
     </style>
 </head>
@@ -77,6 +107,8 @@
         <h2>Coming March 10, 2025</h2>
         <p>The ultimate Minecraft server hosting experience is almost here!</p>
         
+        <div class="countdown" id="countdown">Loading...</div>
+
         <button class="notify-btn">Notify Me</button>
         
         <div class="social-links">
@@ -87,6 +119,29 @@
 
         <footer>© 2025 Reptide Hosting. All rights reserved.</footer>
     </div>
+
+    <script>
+        function updateCountdown() {
+            const launchDate = new Date("March 10, 2025 00:00:00").getTime();
+            const now = new Date().getTime();
+            const timeLeft = launchDate - now;
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            if (timeLeft > 0) {
+                document.getElementById("countdown").innerHTML = 
+                    `🕒 ${days}d ${hours}h ${minutes}m ${seconds}s`;
+            } else {
+                document.getElementById("countdown").innerHTML = "🎉 We Are Live!";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
 
 </body>
 </html>
