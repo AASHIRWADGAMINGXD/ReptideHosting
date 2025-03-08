@@ -54,10 +54,16 @@
       font-weight: bold;
     }
 
+    .status-ready {
+      color: #17a2b8;
+      font-weight: bold;
+    }
+
     .status-offline {
       color: #dc3545;
       font-weight: bold;
     }
+
     .status-error {
       color: #ffc107;
       font-weight: bold;
@@ -80,22 +86,27 @@
       </thead>
       <tbody>
         <tr>
-          <td>Server:Error</td>
-          <td>Unknown</td>
-          <td class="status-offline">Server Not Found!</td>
+          <td>India Server</td>
+          <td>IND</td>
+          <td id="status-ready" class="status-error">Checking...</td>
+        </tr>
+        <tr>
+          <td>Server 2</td>
+          <td>IND</td>
+          <td class="status-ready">Not Ready!</td>
         </tr>
         <tr>
           <td>Server:Error</td>
           <td>Unknown</td>
-          <td class="status-offline">Server Not Found!</td>
-        </tr>
-        <tr>
-          <td>Server:Error</td>
-          <td>Unknown</td>
-          <td class="status-offline">Server Not Found!</td>
+          <td class="status-ready">Not Ready!</td>
         </tr>
       </tbody>
     </table>
   </div>
+
+  <script>
+  </script>
+
 </body>
 </html>
+
