@@ -88,23 +88,53 @@
         <tr>
           <td>India Server</td>
           <td>IND</td>
-          <td id="status-ready" class="status-error">Checking...</td>
-        </tr>
-        <tr>
-          <td>Server 2</td>
-          <td>IND</td>
-          <td class="status-ready">Not Ready!</td>
+          <td id="server-status" class="status-error">Checking...</td>
         </tr>
         <tr>
           <td>Server:Error</td>
           <td>Unknown</td>
-          <td class="status-ready">Not Ready!</td>
+          <td class="status-offline">Server Not Found!</td>
+        </tr>
+        <tr>
+          <td>Server:Error</td>
+          <td>Unknown</td>
+          <td class="status-offline">Server Not Found!</td>
         </tr>
       </tbody>
     </table>
   </div>
 
   <script>
+    async function checkServerStatus() {
+        const serverIP = "147.185.221.18:41971"; // Replace with your actual server IP
+        const apiURL = `https://api.mcsrvstat.us/2/${serverIP}`;
+        
+        try {
+            const response = await fetch(apiURL);
+            const data = await response.json();
+
+            const statusElement = document.getElementById("server-status");
+
+            if (data.online) {
+                if (data.players.online > 0) {
+                    statusElement.innerText = "Online";
+                    statusElement.className = "status-online";
+                } else {
+                    statusElement.innerText = "Ready";
+                    statusElement.className = "status-ready";
+                }
+            } else {
+                statusElement.innerText = "Offline";
+                statusElement.className = "status-offline";
+            }
+        } catch (error) {
+            document.getElementById("server-status").innerText = "Error";
+            document.getElementById("server-status").className = "status-error";
+        }
+    }
+
+    checkServerStatus();
+    setInterval(checkServerStatus, 30000); // Update every 30 seconds
   </script>
 
 </body>
