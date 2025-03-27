@@ -1,108 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reptide Hosting - Server Status</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #1e1e2f;
-      color: #fff;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReptideHosting Server Status</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    header {
-      background-color: #2b2b3d;
-      padding: 20px 0;
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-    }
+        body {
+            background: linear-gradient(135deg, #4B0082, #006D5B); /* Purple to teal gradient */
+            color: #F8F1E9; /* Soft off-white */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
 
-    .server-list {
-      max-width: 600px;
-      margin: 20px auto;
-      padding: 10px;
-      border-collapse: collapse;
-    }
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+        }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+        .header h1 {
+            font-size: 2.5em;
+            color: #00CED1; /* Bright cyan */
+            margin-bottom: 10px;
+        }
 
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #444;
-    }
+        .header p {
+            font-size: 1.2em;
+            color: #F8F1E9;
+            opacity: 0.9;
+        }
 
-    th {
-      background-color: #2b2b3d;
-      color: #ffcc00;
-      text-align: center;
-    }
+        /* Server Status List */
+        .status-list {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px); /* Glass effect */
+        }
 
-    td {
-      text-align: center;
-    }
+        .status-list h2 {
+            font-size: 2em;
+            color: #00CED1; /* Bright cyan */
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-    .status-online {
-      color: #28a745;
-      font-weight: bold;
-    }
+        .status-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-    .status-ready {
-      color: #17a2b8;
-      font-weight: bold;
-    }
+        .status-table th, .status-table td {
+            padding: 15px;
+            text-align: left;
+            font-size: 1em;
+        }
 
-    .status-offline {
-      color: #dc3545;
-      font-weight: bold;
-    }
+        .status-table th {
+            color: #00CED1; /* Bright cyan */
+            font-weight: 500;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
 
-    .status-error {
-      color: #ffc107;
-      font-weight: bold;
-    }
-  </style>
+        .status-table td {
+            color: #F8F1E9;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status-table .status {
+            font-weight: 500;
+        }
+
+        .status-online { color: #32CD32; } /* Enchanted green */
+        .status-offline { color: #8B0000; } /* Dark crimson */
+        .status-error { color: #FFA500; } /* Glowing orange */
+        .status-maintenance { color: #4682B4; } /* Mysterious blue-gray */
+
+        .status-table tr {
+            transition: background 0.3s ease;
+        }
+
+        .status-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #006D5B; /* Deep teal */
+            color: #F8F1E9;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .status-table th, .status-table td {
+                font-size: 0.9em;
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .status-list h2 {
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .status-table th, .status-table td {
+                display: block;
+                text-align: center;
+                padding: 8px;
+            }
+
+            .status-table tr {
+                margin-bottom: 15px;
+                display: block;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .status-table th {
+                display: none;
+            }
+
+            .status-table td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                color: #00CED1;
+                display: block;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    Reptide Hosting - Minecraft Server Status
-  </header>
+    <!-- Header -->
+    <div class="header">
+        <h1>ReptideHosting</h1>
+        <p>Check the current status of our hosting services</p>
+    </div>
 
-  <div class="server-list">
-    <table>
-      <thead>
-        <tr>
-          <th>Node</th>
-          <th>Location</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>India Server</td>
-          <td>IND</td>
-          <td id="server-status" class="status-Online">Online</td>
-        </tr>
-        <tr>
-          <td>Server</td>
-          <td>Unknown</td>
-          <td class="status-Ready">Not Ready</td>
-        </tr>
-        <tr>
-          <td>Server:Error</td>
-          <td>Unknown</td>
-          <td class="status-offline">Not Ready</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <!-- Server Status List -->
+    <div class="status-list">
+        <h2>Server Status</h2>
+        <table class="status-table">
+            <thead>
+                <tr>
+                    <th>Server</th>
+                    <th>Created Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="Server">Server 1</td>
+                    <td data-label="Created Date"></td>
+                    <td data-label="Status" class="status status-online">Online</td>
+                </tr>
+                <tr>
+                    <td data-label="Server">Server 2</td>
+                    <td data-label="Created Date"></td>
+                    <td data-label="Status" class="status status-online">Online</td>
+                </tr>
+                <tr>
+                    <td data-label="Server">Server 3</td>
+                    <td data-label="Created Date"></td>
+                    <td data-label="Status" class="status status-error">unknown</td>
+                </tr>
+                <tr>
+                    <td data-label="Server">Server 4</td>
+                    <td data-label="Created Date"></td>
+                    <td data-label="Status" class="status status-maintenance">unknown</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2025 ReptideHosting. All rights reserved.</p>
+    </div>
 </body>
 </html>
-
