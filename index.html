@@ -2,13 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login - Reptide Hosting</title>
-  <link rel="stylesheet" href="/static/style.css">
+  <title>Minecraft Panel - Login</title>
+  <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Welcome to Reptide Hosting</h1>
-    <a href="/login" class="btn primary">Login with Discord</a>
+  <div class="login-box">
+    <h2>Minecraft Panel</h2>
+    <button id="discordLogin">Login with Discord</button>
+    <button id="firebaseLogin">Login with Email</button>
   </div>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="static/script.js"></script>
 </body>
 </html>
