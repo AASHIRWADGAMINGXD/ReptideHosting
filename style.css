@@ -1,39 +1,48 @@
-body{
-    font-family: Arial, sans-serif;
-    margin: 40px;
-    background: #f4f4f4;
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #0d1117;
+  color: #fff;
 }
 
-.container{
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 10px;
-    text-align: center;
+.login-box, .form-box {
+  text-align: center;
+  padding: 50px;
 }
 
-h1{
-    font-size: 28px;
-    margin-bottom: 20px;
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  background: #5865f2;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
-.card{
-    border: 1px solid #ddd;
-    padding: 16px;
-    border-radius: 10px;
-    margin: 16px 0;
+.sidebar {
+  width: 200px;
+  background: #161b22;
+  position: fixed;
+  height: 100%;
+  padding: 20px;
 }
 
-.btn{
-    display: inline-block;
-    padding: 10px 14px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    text-decoration: none;
-    margin: 8px;
-    cursor: pointer;
+.sidebar a {
+  display: block;
+  margin: 15px 0;
+  color: #ccc;
+  text-decoration: none;
 }
 
-.btn.primary{ border-color: #6aa9ff; }
-.btn.danger{ border-color: #ff7a7a; }
+.main {
+  margin-left: 220px;
+  padding: 20px;
+}
+
+pre {
+  background: black;
+  padding: 10px;
+  height: 300px;
+  overflow-y: auto;
+}
