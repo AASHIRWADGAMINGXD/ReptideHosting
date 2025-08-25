@@ -3,7 +3,7 @@ import requests, os, pyrebase
 
 # ================== CONFIG ==================
 DISCORD_CLIENT_ID = "1409439148099764234"
-DISCORD_CLIENT_SECRET = "YOUR_CLIENT_SECRET"  # Replace with your secret
+DISCORD_CLIENT_SECRET = "sdWyTLD07sH0aCs-854fnJbZQtF8GQSH"  # Replace with your secret
 DISCORD_REDIRECT_URI = "http://localhost:5000/callback"
 DISCORD_API_BASE_URL = "https://discord.com/api"
 # ============================================
