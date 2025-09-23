@@ -20,12 +20,12 @@ apt update && apt upgrade -y
 echo "[+] Installing dependencies..."
 apt install -y curl wget git unzip tar jq ca-certificates lsb-release apt-transport-https software-properties-common gnupg2
 
-# PHP
+echo "[+] Installing PHP..."
 add-apt-repository ppa:ondrej/php -y
 apt update
 apt install -y php8.3 php8.3-cli php8.3-fpm php8.3-mysql php8.3-xml php8.3-mbstring php8.3-curl php8.3-zip php8.3-bcmath php8.3-json php8.3-gd php8.3-intl composer
 
-# Database + Redis
+echo "[+] Installing MariaDB and Redis..."
 apt install -y mariadb-server redis-server
 
 echo "[+] Configuring MariaDB..."
@@ -36,36 +36,37 @@ GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'127.0.0.1';
 FLUSH PRIVILEGES;
 MYSQL_SCRIPT
 
-# Docker
+echo "[+] Installing Docker..."
 curl -sSL https://get.docker.com/ | CHANNEL=stable bash
 systemctl enable --now docker
 
-# Panel
 echo "[+] Installing Pterodactyl Panel..."
 cd /var/www
-git clone https://github.com/pterodactyl/panel.git
+git clone https://github.com/pterodactyl/panel.git panel
 cd panel
+# Optionally check out latest tag
 git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
 cp .env.example .env
 composer install --no-dev --optimize-autoloader
 php artisan key:generate
 
-# Configure .env
+echo "[+] Configuring .env for panel..."
 sed -i "s/DB_DATABASE=.*/DB_DATABASE=$DB_NAME/" .env
 sed -i "s/DB_USERNAME=.*/DB_USERNAME=$DB_USER/" .env
 sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=$DB_PASS/" .env
 sed -i "s|APP_URL=.*|APP_URL=https://$PANEL_DOMAIN|" .env
 
+echo "[+] Running migrations & seeding..."
 php artisan migrate --seed --force
 php artisan storage:link
 
-# Create admin user
+echo "[+] Creating admin user..."
 php artisan p:user:make --email=$ADMIN_EMAIL --username=$ADMIN_USER --name-first=Admin --name-last=User --password=$ADMIN_PASS --admin=1 || true
 
+echo "[+] Setting file permissions..."
 chown -R www-data:www-data /var/www/panel
 chmod -R 755 /var/www/panel
 
-# Nginx
 echo "[+] Setting up Nginx..."
 apt install -y nginx certbot python3-certbot-nginx
 
@@ -102,19 +103,19 @@ ln -s /etc/nginx/sites-available/pterodactyl.conf /etc/nginx/sites-enabled/
 rm -f /etc/nginx/sites-enabled/default
 nginx -t && systemctl restart nginx
 
-echo "[+] Getting SSL certificate..."
-certbot --nginx -d $PANEL_DOMAIN --non-interactive --agree-tos -m $ADMIN_EMAIL
+echo "[+] Obtaining SSL certificate..."
+certbot --nginx -d $PANEL_DOMAIN --non-interactive --agree-tos -m $ADMIN_EMAIL --redirect
 
-# Cron
-echo "* * * * * php /var/www/panel/artisan schedule:run >> /dev/null 2>&1" | crontab -
+echo "[+] Setting up cron job for schedule..."
+(crontab -l 2>/dev/null; echo "* * * * * php /var/www/panel/artisan schedule:run >> /dev/null 2>&1") | crontab -
 
-# Wings
 echo "[+] Installing Wings..."
 mkdir -p /etc/pterodactyl
 cd /etc/pterodactyl
 curl -Lo wings https://github.com/pterodactyl/wings/releases/latest/download/wings_linux_amd64
 chmod +x wings
 
+echo "[+] Creating systemd service for Wings..."
 cat > /etc/systemd/system/wings.service <<EOF
 [Unit]
 Description=Pterodactyl Wings Daemon
@@ -126,7 +127,7 @@ User=root
 WorkingDirectory=/etc/pterodactyl
 ExecStart=/etc/pterodactyl/wings
 Restart=on-failure
-StartLimitInterval=600
+StartLimitIntervalSec=600
 
 [Install]
 WantedBy=multi-user.target
