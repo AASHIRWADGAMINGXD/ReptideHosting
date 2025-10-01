@@ -149,21 +149,7 @@
       });
     }
 
-    function addNode() {
-      const newNode = { name: 'Node' + (nodes.length + 2), country: 'Germany', status: 'Online' };
-      nodes.push(newNode);
-      renderNodes();
-    }
 
-    function toggleStatus() {
-      nodes = nodes.map(node => {
-        node.status = node.status === 'Online' ? 'Offline' : 'Online';
-        return node;
-      });
-      renderNodes();
-    }
-
-    renderNodes();
   </script>
 
 </body>
