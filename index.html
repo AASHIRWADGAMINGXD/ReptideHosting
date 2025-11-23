@@ -1,216 +1,358 @@
-Imp
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
- 
-  <title>Reptide Hosting - Minecraft Hosting</title>
+  <title>Reptide Hosting - Premium Minecraft Hosting</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
   <style>
-    /* General Reset */
+    /* --- Variables for Red/Black Theme --- */
+    :root {
+      --primary-red: #ff0033;
+      --dark-red: #cc0000;
+      --bg-black: #050505;
+      --bg-card: #101010;
+      --text-white: #ffffff;
+      --text-gray: #b3b3b3;
+      --glow: 0 0 15px rgba(255, 0, 51, 0.6);
+      --transition: all 0.3s ease-in-out;
+    }
+
+    /* --- General Reset --- */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    /* Body Styling */
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #1a1a1a;
-      color: white;
-      line-height: 1.6;
+    html {
+      scroll-behavior: smooth;
     }
 
-    /* Header Styling */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-black);
+      color: var(--text-white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* --- Animations --- */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 5px var(--primary-red); }
+      50% { box-shadow: 0 0 20px var(--primary-red), 0 0 10px var(--primary-red); }
+      100% { box-shadow: 0 0 5px var(--primary-red); }
+    }
+
+    /* --- Header / Navbar --- */
     header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 20px;
-      background-color: #222;
+      padding: 15px 5%;
+      background: rgba(5, 5, 5, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 0, 51, 0.2);
     }
 
     header .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: white;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-white);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
-    header nav {
-      position: relative;
+    header .logo span {
+      color: var(--primary-red);
+      text-shadow: 0 0 10px var(--primary-red);
     }
 
     header nav .menu-toggle {
       display: none;
       background: none;
       border: none;
-      font-size: 24px;
-      color: white;
+      font-size: 28px;
+      color: var(--text-white);
       cursor: pointer;
     }
 
     header nav ul {
-      list-style-type: none;
+      list-style: none;
       display: flex;
-      gap: 15px;
+      gap: 30px;
     }
 
     header nav ul li a {
       text-decoration: none;
-      color: white;
+      color: var(--text-white);
       font-size: 16px;
-      padding: 10px 15px;
-      border-radius: 5px;
-      transition: background-color 0.3s;
+      font-weight: 500;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    /* Navbar Underline Animation */
+    header nav ul li a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: var(--primary-red);
+      transition: width 0.3s;
+      box-shadow: 0 0 5px var(--primary-red);
     }
 
     header nav ul li a:hover {
-      background-color: #0072ff;
+      color: var(--primary-red);
     }
 
-    /* Mobile Styles */
+    header nav ul li a:hover::after {
+      width: 100%;
+    }
+
+    /* --- Hero Section --- */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      background: radial-gradient(circle at center, #1a0005 0%, var(--bg-black) 70%);
+      position: relative;
+    }
+
+    .hero::before {
+      /* Grid Pattern Background */
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: linear-gradient(rgba(255, 0, 51, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255, 0, 51, 0.05) 1px, transparent 1px);
+      background-size: 30px 30px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      animation: fadeIn 1s ease-out;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .hero h1 span {
+      color: var(--primary-red);
+      text-shadow: 0 0 20px rgba(255, 0, 51, 0.8);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-gray);
+      margin-bottom: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* --- Glowing Button --- */
+    .btn-glow {
+      padding: 15px 35px;
+      background-color: transparent;
+      border: 2px solid var(--primary-red);
+      color: var(--primary-red);
+      font-size: 18px;
+      font-weight: 600;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+      z-index: 1;
+    }
+
+    .btn-glow::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: var(--primary-red);
+      z-index: -1;
+      transition: var(--transition);
+    }
+
+    .btn-glow:hover::before {
+      left: 0;
+    }
+
+    .btn-glow:hover {
+      color: white;
+      box-shadow: 0 0 30px rgba(255, 0, 51, 0.6);
+    }
+
+    /* --- Sections Generic --- */
+    .section {
+      padding: 80px 5%;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 50px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section h2::after {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 3px;
+      background: var(--primary-red);
+      margin: 10px auto 0;
+      box-shadow: 0 0 10px var(--primary-red);
+    }
+
+    /* --- Grid Layouts --- */
+    .feature-grid, .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 0 10px;
+    }
+
+    /* --- Cards --- */
+    .card {
+      background: var(--bg-card);
+      padding: 40px 30px;
+      border-radius: 10px;
+      border: 1px solid #222;
+      transition: var(--transition);
+      position: relative;
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      border-color: var(--primary-red);
+      box-shadow: 0 10px 30px rgba(255, 0, 51, 0.15);
+    }
+
+    .card h3 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      color: var(--text-white);
+    }
+
+    .card p {
+      color: var(--text-gray);
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    .card button {
+      padding: 10px 25px;
+      background: #222;
+      border: 1px solid #444;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: auto;
+    }
+
+    .card:hover button {
+      background: var(--primary-red);
+      border-color: var(--primary-red);
+      box-shadow: 0 0 15px rgba(255, 0, 51, 0.5);
+    }
+
+    /* Special Pricing Card Highlight */
+    .card.highlight {
+      border: 1px solid var(--primary-red);
+      box-shadow: 0 0 15px rgba(255, 0, 51, 0.1);
+    }
+
+    /* --- Footer --- */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      background-color: #000;
+      border-top: 1px solid #222;
+      color: var(--text-gray);
+    }
+
+    footer strong {
+      color: var(--primary-red);
+    }
+
+    /* --- Responsive Design --- */
     @media (max-width: 768px) {
-      header nav .menu-toggle {
-        display: block;
-      }
+      .hero h1 { font-size: 2.5rem; }
+      
+      header nav .menu-toggle { display: block; }
 
       header nav ul {
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 50px;
-        right: 0;
-        background-color: #333;
+        top: 70px;
+        right: 20px;
+        background-color: rgba(16, 16, 16, 0.95);
         width: 200px;
-        padding: 10px;
-        border-radius: 8px;
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid var(--primary-red);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.8);
       }
 
       header nav ul.show {
         display: flex;
+        animation: fadeIn 0.3s ease-out;
       }
 
-      header nav ul li {
-        margin: 10px 0;
-      }
+      header nav ul li { margin: 10px 0; text-align: center; }
     }
 
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      padding: 100px 20px;
-      background-color: #333;
-    }
-
-    .hero h1 {
-      font-size: 36px;
-      margin-bottom: 20px;
-    }
-
-    .hero p {
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
-
-    .hero button {
-      padding: 10px 20px;
-      background-color: #0072ff;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .hero button:hover {
-      background-color: #005bb5;
-    }
-
-    /* Section Styling */
-    .section {
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    .section h2 {
-      margin-bottom: 20px;
-      font-size: 28px;
-    }
-
-    .feature-cards, .pricing-cards {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .card {
-      background-color: #444;
-      padding: 20px;
-      border-radius: 8px;
-      width: 90%;
-      max-width: 300px;
-      text-align: center;
-    }
-
-    .card h3 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-
-    .card p {
-      font-size: 14px;
-      margin-bottom: 15px;
-    }
-
-    .card button {
-      padding: 8px 15px;
-      background-color: #0072ff;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .card button:hover {
-      background-color: #005bb5;
-    }
-
-    /* Footer Styling */
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #222;
-      font-size: 14px;
-    }
-
-    /* Responsive Design */
-    @media (min-width: 768px) {
-      .hero h1 {
-        font-size: 48px;
-      }
-
-      .hero p {
-        font-size: 20px;
-      }
-
-      .card {
-        width: 250px;
-      }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 2rem; }
+      .card { padding: 30px 20px; }
     }
   </style>
 </head>
 <body>
-   <meta http-equiv="refresh" content="5; url=/"goodbye.html">
+  
+  <!-- Note: Removed auto-refresh so you can view the design. Uncomment below if needed. -->
+  <!-- <meta http-equiv="refresh" content="5; url=goodbye.html"> -->
+
   <header>
-    <div class="logo">Reptide Hosting</div>
+    <div class="logo">Reptide <span>Hosting</span></div>
     <nav>
-      <button class="menu-toggle" aria-label="Toggle Menu">☰</button>
+      <button class="menu-toggle" aria-label="Toggle Menu">
+        <!-- SVG Hamburger Icon -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
       <ul class="nav-links">
         <li><a href="#home">Home</a></li>
         <li><a href="#features">Features</a></li>
@@ -221,60 +363,103 @@ Imp
   </header>
 
   <section id="home" class="hero">
-    <h1>Welcome to Reptide Hosting</h1>
-    <p>Your ultimate Minecraft hosting solution</p>
-    <button onclick="window.location.href='#pricing'">Get Started</button>
+    <div class="hero-content">
+      <h1>Power Your <br><span>Minecraft World</span></h1>
+      <p>High-performance servers, 99.9% uptime, and instant setup. Experience the next generation of gaming hosting.</p>
+      <button class="btn-glow" onclick="window.location.href='#pricing'">Get Started</button>
+    </div>
   </section>
 
   <section id="features" class="section">
-    <h2>Our Features</h2>
-    <div class="feature-cards">
+    <h2>Why Choose Us?</h2>
+    <div class="feature-grid">
       <div class="card">
-        <h3>High Performance</h3>
-        <p>Blazing fast servers for seamless gaming experience.</p>
+        <h3>🚀 Extreme Performance</h3>
+        <p>Powered by Ryzen processors and NVMe SSDs to ensure zero lag for your players.</p>
       </div>
       <div class="card">
-        <h3>24/7 Support</h3>
-        <p>Always here to help you with any issues.</p>
+        <h3>🛡️ DDoS Protection</h3>
+        <p>State-of-the-art mitigation keeps your server safe from attacks 24/7.</p>
       </div>
       <div class="card">
-        <h3>Customizable Plans</h3>
-        <p>Choose the plan that suits your needs.</p>
+        <h3>⚡ Instant Setup</h3>
+        <p>Your server is online and ready to play seconds after your payment is confirmed.</p>
+      </div>
+      <div class="card">
+        <h3>🛠️ 24/7 Support</h3>
+        <p>Our team of experts is always awake to help you solve any issues immediately.</p>
       </div>
     </div>
   </section>
 
   <section id="pricing" class="section">
-    <h2>Pricing</h2>
-    <div class="pricing-cards">
+    <h2>Our Plans</h2>
+    <div class="pricing-grid">
       <div class="card">
-        <h3>Free Plan</h3>
-        <p>12GB RAM, 107.7GB disk space</p>
-        <button onclick="window.location.href='start.html'">Sign Up</button>
+        <h3>Starter</h3>
+        <p style="color: #888">Perfect for small SMPs</p>
+        <h2 style="font-size: 30px; margin: 10px 0; color:white; border:none; box-shadow:none;">Free</h2>
+        <p>12GB RAM<br>107.7GB Disk Space</p>
+        <button onclick="window.location.href='start.html'">Deploy Now</button>
       </div>
+      
+      <div class="card highlight">
+        <h3>Pro</h3>
+        <p style="color: var(--primary-red)">Coming Soon!</p>
+        <h2 style="font-size: 30px; margin: 10px 0; color:white; border:none; box-shadow:none;">$??</h2>
+        <p>Unlimited RAM<br>Unlimited Slots</p>
+        <button disabled style="cursor: not-allowed; opacity: 0.5;">Notify Me</button>
+      </div>
+
       <div class="card">
-        <h3>Premium Plan</h3>
-        <p>Coming Soon!</p>
-        <button onclick="window.location.href=''">Sign Up</button>
+        <h3>Enterprise</h3>
+        <p style="color: #888">For large networks</p>
+        <h2 style="font-size: 30px; margin: 10px 0; color:white; border:none; box-shadow:none;">Contact Us</h2>
+        <p>Dedicated Cores<br>Priority Support</p>
+        <button onclick="window.location.href='#support'">Contact Sales</button>
       </div>
     </div>
   </section>
 
   <section id="support" class="section">
-    <h2>Need Help?</h2>
-    <p>Visit our support page or contact us at <strong>support@aashirwadclouds.com</strong></p>
+    <h2>Need Assistance?</h2>
+    <p style="color: #aaa; margin-bottom: 30px;">We are here to help you every step of the way.</p>
+    <div class="card" style="max-width: 500px; margin: 0 auto;">
+      <h3>Contact Support</h3>
+      <p>Email us directly or join our Discord.</p>
+      <p><strong>support@aashirwadclouds.com</strong></p>
+      <button class="btn-glow" style="font-size: 14px; padding: 10px 20px;">Open Ticket</button>
+    </div>
   </section>
 
   <footer>
-    <p>&copy; 2025 AashirwadGamingXD| All rights reserved</p>
+    <p>&copy; 2025 <strong>AashirwadGamingXD</strong> | All rights reserved</p>
   </footer>
 
   <script>
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
+    const header = document.querySelector('header');
 
+    // Toggle Mobile Menu
     menuToggle.addEventListener('click', () => {
       navLinks.classList.toggle('show');
+    });
+
+    // Close mobile menu when a link is clicked
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('show');
+      });
+    });
+
+    // Optional: Add shadow to navbar on scroll
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.style.boxShadow = "0 4px 20px rgba(0,0,0,0.5)";
+      } else {
+        header.style.boxShadow = "none";
+      }
     });
   </script>
 </body>
