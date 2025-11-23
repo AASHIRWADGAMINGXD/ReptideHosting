@@ -1,153 +1,281 @@
+Imp
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Status List</title>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ 
+  <title>Reptide Hosting - Minecraft Hosting</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #1a1a1a;
-      color: #fff;
+    /* General Reset */
+    * {
       margin: 0;
-      padding: 20px;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    h1 {
-      text-align: center;
-      color: #ff4c4c;
-      margin-bottom: 30px;
-      animation: glow 2s infinite alternate;
+    /* Body Styling */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
+      color: white;
+      line-height: 1.6;
     }
 
-    @keyframes glow {
-      0% { text-shadow: 0 0 5px #ff0000, 0 0 10px #ff4c4c; }
-      100% { text-shadow: 0 0 20px #ff0000, 0 0 40px #ff4c4c; }
+    /* Header Styling */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background-color: #222;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: #000;
-      border: 2px solid #ff0000;
-      box-shadow: 0 0 15px #ff0000;
-      animation: pulse 3s infinite;
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 5px #ff0000; }
-      50% { box-shadow: 0 0 20px #ff4c4c; }
-      100% { box-shadow: 0 0 5px #ff0000; }
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: center;
-      border-bottom: 1px solid #ff0000;
-      transition: all 0.3s ease;
-    }
-
-    th {
-      background-color: #ff0000;
-      color: #fff;
-    }
-
-    td.online {
-      color: #00ff00;
+    header .logo {
+      font-size: 24px;
       font-weight: bold;
-      animation: blinkGreen 1s infinite;
+      color: white;
     }
 
-    td.offline {
-      color: #ff0000;
-      font-weight: bold;
-      animation: blinkRed 1s infinite;
+    header nav {
+      position: relative;
     }
 
-    @keyframes blinkGreen {
-      0%, 50%, 100% { color: #00ff00; }
-      25%, 75% { color: #66ff66; }
-    }
-
-    @keyframes blinkRed {
-      0%, 50%, 100% { color: #ff0000; }
-      25%, 75% { color: #ff6666; }
-    }
-
-    button {
-      background-color: #ff0000;
-      color: #fff;
+    header nav .menu-toggle {
+      display: none;
+      background: none;
       border: none;
-      padding: 10px 20px;
-      margin: 10px 0;
+      font-size: 24px;
+      color: white;
       cursor: pointer;
+    }
+
+    header nav ul {
+      list-style-type: none;
+      display: flex;
+      gap: 15px;
+    }
+
+    header nav ul li a {
+      text-decoration: none;
+      color: white;
       font-size: 16px;
+      padding: 10px 15px;
       border-radius: 5px;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 0 10px #ff0000;
+      transition: background-color 0.3s;
     }
 
-    button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 20px #ff4c4c;
+    header nav ul li a:hover {
+      background-color: #0072ff;
     }
 
-    button:active {
-      transform: scale(0.95);
-      box-shadow: 0 0 5px #ff0000;
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      header nav .menu-toggle {
+        display: block;
+      }
+
+      header nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 50px;
+        right: 0;
+        background-color: #333;
+        width: 200px;
+        padding: 10px;
+        border-radius: 8px;
+      }
+
+      header nav ul.show {
+        display: flex;
+      }
+
+      header nav ul li {
+        margin: 10px 0;
+      }
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 100px 20px;
+      background-color: #333;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .hero button {
+      padding: 10px 20px;
+      background-color: #0072ff;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .hero button:hover {
+      background-color: #005bb5;
+    }
+
+    /* Section Styling */
+    .section {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .section h2 {
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    .feature-cards, .pricing-cards {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background-color: #444;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 300px;
+      text-align: center;
+    }
+
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .card button {
+      padding: 8px 15px;
+      background-color: #0072ff;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .card button:hover {
+      background-color: #005bb5;
+    }
+
+    /* Footer Styling */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #222;
+      font-size: 14px;
+    }
+
+    /* Responsive Design */
+    @media (min-width: 768px) {
+      .hero h1 {
+        font-size: 48px;
+      }
+
+      .hero p {
+        font-size: 20px;
+      }
+
+      .card {
+        width: 250px;
+      }
     }
   </style>
 </head>
 <body>
+   <meta http-equiv="refresh" content="5; url=/"goodbye.html">
+  <header>
+    <div class="logo">Reptide Hosting</div>
+    <nav>
+      <button class="menu-toggle" aria-label="Toggle Menu">☰</button>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#support">Support</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <h1>Node Status List</h1>
+  <section id="home" class="hero">
+    <h1>Welcome to Reptide Hosting</h1>
+    <p>Your ultimate Minecraft hosting solution</p>
+    <button onclick="window.location.href='#pricing'">Get Started</button>
+  </section>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Node</th>
-        <th>Country</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody id="statusList">
-      <tr>
-        <td>Node1</td>
-        <td>India</td>
-        <td class="offline">OFFline</td>
-      </tr>
-    </tbody>
-  </table>
+  <section id="features" class="section">
+    <h2>Our Features</h2>
+    <div class="feature-cards">
+      <div class="card">
+        <h3>High Performance</h3>
+        <p>Blazing fast servers for seamless gaming experience.</p>
+      </div>
+      <div class="card">
+        <h3>24/7 Support</h3>
+        <p>Always here to help you with any issues.</p>
+      </div>
+      <div class="card">
+        <h3>Customizable Plans</h3>
+        <p>Choose the plan that suits your needs.</p>
+      </div>
+    </div>
+  </section>
 
-  
+  <section id="pricing" class="section">
+    <h2>Pricing</h2>
+    <div class="pricing-cards">
+      <div class="card">
+        <h3>Free Plan</h3>
+        <p>12GB RAM, 107.7GB disk space</p>
+        <button onclick="window.location.href='start.html'">Sign Up</button>
+      </div>
+      <div class="card">
+        <h3>Premium Plan</h3>
+        <p>Coming Soon!</p>
+        <button onclick="window.location.href=''">Sign Up</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="support" class="section">
+    <h2>Need Help?</h2>
+    <p>Visit our support page or contact us at <strong>support@aashirwadclouds.com</strong></p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 AashirwadGamingXD| All rights reserved</p>
+  </footer>
 
   <script>
-    const tbody = document.getElementById('statusList');
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
 
-    let nodes = [
-      { name: 'Node2', country: 'USA', status: 'Offline' },
-      { name: 'Node3', country: 'UK', status: 'Online' }
-    ];
-
-    function renderNodes() {
-      tbody.innerHTML = `<tr>
-        <td>Node1</td>
-        <td>India</td>
-        <td class="online">Online</td>
-      </tr>`;
-      nodes.forEach(node => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${node.name}</td>
-          <td>${node.country}</td>
-          <td class="${node.status.toLowerCase()}">${node.status}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
   </script>
-
 </body>
 </html>
