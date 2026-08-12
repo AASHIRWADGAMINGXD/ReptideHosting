@@ -523,8 +523,23 @@ async function renderLogs(content) {
 // ---------------------------------------------------------------
 async function renderSettings(content) {
   const { data: session } = await supabaseClient.auth.getSession();
+  const { data: settingsRow } = await supabaseClient.from("bot_settings").select("*").eq("id", 1).single();
+  const maintenanceOn = settingsRow?.maintenance_mode ?? false;
+
   content.innerHTML = `
     <div class="glass glow p-6">${panelHeader("⚙️ Settings", "Environment & account")}</div>
+    <div class="glass glow p-6 space-y-3">
+      <div class="flex justify-between items-center text-sm">
+        <div>
+          <div>Maintenance Mode</div>
+          <div class="text-xs" style="color:var(--text-dim)">When ON, the bot replies "can't run" to every command (owner is exempt)</div>
+        </div>
+        <button id="maintenanceToggle" class="gradient-btn text-xs">
+          ${maintenanceOn ? "🔴 Turn OFF" : "🟢 Turn ON"}
+        </button>
+      </div>
+      <div class="text-xs" id="maintenanceStatus">Status: <span class="badge ${maintenanceOn ? "badge-danger" : "badge-ok"}">${maintenanceOn ? "Maintenance ON" : "Live"}</span></div>
+    </div>
     <div class="glass glow p-6 space-y-3">
       <div class="flex justify-between text-sm"><span style="color:var(--text-dim)">Logged in as</span><span class="mono">${session.session?.user?.email ?? "—"}</span></div>
       <div class="flex justify-between text-sm"><span style="color:var(--text-dim)">Supabase URL</span><span class="mono">${SUPABASE_URL}</span></div>
@@ -535,4 +550,14 @@ async function renderSettings(content) {
       <p class="text-xs mb-3" style="color:var(--text-dim)">Toggle dark/light using the button in the top bar. Your preference is saved locally.</p>
     </div>
   `;
+
+  document.getElementById("maintenanceToggle").addEventListener("click", async () => {
+    const { error } = await supabaseClient.from("bot_settings")
+      .update({ maintenance_mode: !maintenanceOn, updated_at: new Date().toISOString() })
+      .eq("id", 1);
+    if (error) return alert("Failed: " + error.message);
+    renderSettings(content);
+  });
+
+  subscribeRealtime("bot_settings", () => renderSettings(content));
 }
